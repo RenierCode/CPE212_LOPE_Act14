@@ -1,0 +1,20 @@
+---
+- name: Install Keystone (Ubuntu)
+  package:
+    name: keystone
+    state: present
+  when: ansible_distribution == "Ubuntu"
+
+- name: Enable and Start Keystone services (Ubuntu)
+  systemd:
+    name: apache2
+    state: started
+    enabled: yes
+  when: ansible_distribution == "Ubuntu"
+
+- name: Restart Apache Service (Ubuntu)
+  systemd:
+    name: apache2
+    enabled: yes
+    state: restarted
+  when: ansible_distribution == "Ubuntu"

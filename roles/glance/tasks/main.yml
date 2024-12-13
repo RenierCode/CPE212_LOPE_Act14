@@ -1,0 +1,16 @@
+---
+- name: Install Glance packages (Ubuntu)
+  apt:
+    name:
+      - glance
+      - python3-glanceclient
+    state: present
+    update_cache: yes
+  when: ansible_distribution == "Ubuntu"
+
+- name: Enable and Start Glance services (Ubuntu)
+  systemd:
+    name: glance-api
+    state: started
+    enabled: yes
+  when: ansible_distribution == "Ubuntu"

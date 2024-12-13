@@ -1,0 +1,32 @@
+---
+- hosts: all
+  become: true
+  pre_tasks:
+
+  - name: Update Repository Index (CentOS)
+    tags: always, centOS
+    yum:
+      update_cache: yes
+    changed_when: false
+    when: ansible_distribution == "CentOS"
+
+  - name: Update Repository Index (Ubuntu)
+    tags: always, ubuntu
+    apt:
+      update_cache: yes
+    changed_when: false
+    when: ansible_distribution == "Ubuntu"
+
+- hosts: controller
+  become: true
+  roles:
+    - keystone
+    - glance
+    - nova
+
+- hosts: computer
+  become: true
+  roles:
+    - keystone
+    - glance
+    - nova
